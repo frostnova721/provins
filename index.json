@@ -1,8 +1,8 @@
 [
     {
-        "provider": "AnimePahe",
+        "name": "AnimePahe",
         "version": "1.0.0",
         "icon": "https://animepahe.ru/web-app-manifest-512x512.png",
-        "fileName": "animepahe.dart"
+        "identifier": "animepahe"
     }
 ]
