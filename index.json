@@ -2,7 +2,7 @@
     {
         "name": "AnimePahe",
         "version": "1.0.0",
-        "icon": "https://raw.githubusercontent.com/kodjodevf/mangayomi-extensions/main/dart/anime/src/en/animepahe/icon.png",
+        "icon": "https://raw.githubusercontent.com/frostnova721/provins/master/lib/providers/animepahe/icon.png",
         "identifier": "animepahe"
     }
 ]
