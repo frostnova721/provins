@@ -3,6 +3,7 @@
         "name": "AnimePahe",
         "version": "1.0.0",
         "icon": "https://raw.githubusercontent.com/frostnova721/provins/master/lib/providers/animepahe/icon.png",
-        "identifier": "animepahe"
+        "identifier": "animepahe",
+        "supportDownloads": true
     }
 ]
