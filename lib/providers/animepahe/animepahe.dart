@@ -1,6 +1,6 @@
 import 'package:provins/classes.dart';
-import 'package:http/http.dart' as http;
-import 'package:html/parser.dart' as html;
+import 'package:http/http.dart';
+import 'package:html/parser.dart';
 import 'dart:math';
 import 'dart:convert';
 
@@ -17,7 +17,7 @@ class AnimePahe extends AnimeProvider {
   Future<List<Map<String, String?>>> search(String query) async {
     query = query.replaceAll("-", "");
     final String url = "https://animepahe.ru/api?m=search&q=$query";
-    final res = await http.get(Uri.parse(url), headers: _headers);
+    final res = await get(Uri.parse(url), headers: _headers);
     final Map<String, dynamic> decoded = json.decode(res.body);
     final List<dynamic> results = decoded['data'];
     final List<Map<String, String?>> searchResults = [];
@@ -35,7 +35,7 @@ class AnimePahe extends AnimeProvider {
   Future<List<Map<String, dynamic>>> getAnimeEpisodeLink(String session, {bool dub = false}) async {
     List<dynamic> list = [];
     final String url = "https://animepahe.ru/api?m=release&id=$session&sort=episode_asc`";
-    final data = await http.get(Uri.parse(url), headers: _headers);
+    final data = await get(Uri.parse(url), headers: _headers);
     final bodyDecoded = json.decode(data.body);
     final int totalPages = bodyDecoded['last_page'];
 
@@ -43,7 +43,7 @@ class AnimePahe extends AnimeProvider {
 
     for (int i = 1; i < totalPages; i++) {
       if (i > 5) break;
-      final res = await http.get(Uri.parse("$url&page=${i + 1}"), headers: _headers);
+      final res = await get(Uri.parse("$url&page=${i + 1}"), headers: _headers);
       list.add(json.decode(res.body)['data']);
     }
 
@@ -88,8 +88,8 @@ class AnimePahe extends AnimeProvider {
   @override
   Future<void> getDownloadSources(String episodeUrl, Function(List<VideoStream> list, bool) update,
       {bool dub = false, String? metadata}) async {
-    final data = await http.get(Uri.parse(episodeUrl), headers: _headers);
-    final document = html.parse(data.body);
+    final data = await get(Uri.parse(episodeUrl), headers: _headers);
+    final document = parse(data.body);
     final downloadQualities = document.querySelectorAll('div#pickDownload > a');
     final List<Map<String, String>> links = [];
     for (var e in downloadQualities) {
@@ -179,8 +179,8 @@ class AnimePahe extends AnimeProvider {
     final urlRegex = RegExp(r'action="(.+?)"');
     final tokenRegex = RegExp(r'value="(.+?)"');
 
-    final resp = await http.get(Uri.parse(downloadLink), headers: {'referer': downloadLink});
-    final scripts = html.parse(resp.body).querySelectorAll('script');
+    final resp = await get(Uri.parse(downloadLink), headers: {'referer': downloadLink});
+    final scripts = parse(resp.body).querySelectorAll('script');
     String? kwikLink;
     for (final e in scripts) {
       if (e.text != '') {
@@ -193,7 +193,7 @@ class AnimePahe extends AnimeProvider {
     }
     if (kwikLink == null) throw Exception("Couldnt extract kwik link");
 
-    final kwikRes = await http.get(Uri.parse(kwikLink));
+    final kwikRes = await get(Uri.parse(kwikLink));
     final cookies = kwikRes.headers['set-cookie'];
     final match = paramRegex.firstMatch(kwikRes.body);
     if (match == null) throw Exception("Couldnt extract download link");
@@ -207,7 +207,7 @@ class AnimePahe extends AnimeProvider {
     final token = tokenRegex.firstMatch(decrypted)!.group(1);
 
     try {
-      final r2 = await http.post(
+      final r2 = await post(
         Uri.parse(postUrl!),
         body: {'_token': token},
         headers: {'referer': kwikLink, 'cookie': cookies!},
@@ -222,4 +222,4 @@ class AnimePahe extends AnimeProvider {
   }
 }
 
-AnimeProvider createProvider() => AnimePahe();
+AnimeProvider main() => AnimePahe();
