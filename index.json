@@ -1,16 +1,9 @@
 [
     {
-        "name": "AnimePahe",
+        "name": "ProviderName",
         "version": "1.0.0",
-        "icon": "https://raw.githubusercontent.com/frostnova721/provins/master/lib/providers/animepahe/icon.png",
-        "identifier": "animepahe",
-        "supportDownloads": true
-    },
-     {
-        "name": "Hikari",
-        "version": "1.0.0",
-        "icon": "https://raw.githubusercontent.com/frostnova721/provins/master/lib/providers/hikari/icon.png",
-        "identifier": "hikari",
+        "icon": "https://raw.githubusercontent.com/frostnova721/provins/master/lib/providers/path",
+        "identifier": "identifier",
         "supportDownloads": true
     }
 ]
